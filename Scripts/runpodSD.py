@@ -114,7 +114,7 @@ def repo(Huggingface_token_optional):
              call('tar --zstd -xf sd_mrep.tar.zst', shell=True)
              call('rm sd_mrep.tar.zst', shell=True)        
           os.chdir('/workspace/sd')
-          if not os.path.exists('stable-diffusion-webui'):
+          if not os.path.exists('SD'):
               call('git clone -q --depth 1 --branch main https://github.com/apollo812/SD', shell=True)
         
     else:
@@ -126,11 +126,11 @@ def repo(Huggingface_token_optional):
            call('rm sd_mrep.tar.zst', shell=True)        
 
         os.chdir('/workspace/sd')
-        if not os.path.exists('stable-diffusion-webui'):
+        if not os.path.exists('SD'):
             call('git clone -q --depth 1 --branch main https://github.com/apollo812/SD', shell=True)
 
 
-    os.chdir('/workspace/sd/stable-diffusion-webui/')
+    os.chdir('/workspace/sd/SD/')
     call('git reset --hard', shell=True)
     print('[1;32m')
     call('git pull', shell=True)
@@ -146,8 +146,8 @@ def mdl(Original_Model_Version, Path_to_MODEL, MODEL_LINK):
     
     src=getsrc(MODEL_LINK)  
 
-    if not os.path.exists('/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/SDv1-5.ckpt'):
-        call('ln -s /workspace/auto-models/* /workspace/sd/stable-diffusion-webui/models/Stable-diffusion', shell=True)
+    if not os.path.exists('/workspace/sd/SD/models/Stable-diffusion/SDv1-5.ckpt'):
+        call('ln -s /workspace/auto-models/* /workspace/sd/SD/models/Stable-diffusion', shell=True)
 
     if Path_to_MODEL !='':
       if os.path.exists(str(Path_to_MODEL)):
@@ -160,7 +160,7 @@ def mdl(Original_Model_Version, Path_to_MODEL, MODEL_LINK):
 
       if src=='civitai':
          modelname=get_name(MODEL_LINK, False)
-         model=f'/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/{modelname}'
+         model=f'/workspace/sd/SD/models/Stable-diffusion/{modelname}'
          if not os.path.exists(model):
             dwn(MODEL_LINK, model, 'Downloading the custom model')
             clear_output()
@@ -168,7 +168,7 @@ def mdl(Original_Model_Version, Path_to_MODEL, MODEL_LINK):
             print('[1;33mModel already exists')
       elif src=='gdrive':
          modelname=get_name(MODEL_LINK, True)
-         model=f'/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/{modelname}'
+         model=f'/workspace/sd/SD/models/Stable-diffusion/{modelname}'
          if not os.path.exists(model):
             gdown.download(url=MODEL_LINK, output=model, quiet=False, fuzzy=True)
             clear_output()
@@ -176,7 +176,7 @@ def mdl(Original_Model_Version, Path_to_MODEL, MODEL_LINK):
             print('[1;33mModel already exists')
       else:
          modelname=os.path.basename(MODEL_LINK)
-         model=f'/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/{modelname}'
+         model=f'/workspace/sd/SD/models/Stable-diffusion/{modelname}'
          if not os.path.exists(model):
             gdown.download(url=MODEL_LINK, output=model, quiet=False, fuzzy=True)
             clear_output()
@@ -191,29 +191,29 @@ def mdl(Original_Model_Version, Path_to_MODEL, MODEL_LINK):
 
     else:
         if Original_Model_Version == "v1.5":
-           model="/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/SDv1-5.ckpt"
+           model="/workspace/sd/SD/models/Stable-diffusion/SDv1-5.ckpt"
            print('[1;32mUsing the original V1.5 model')
         elif Original_Model_Version == "v2-512":
-            model='/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/SDv2-512.ckpt'
-            if not os.path.exists('/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/SDv2-512.ckpt'):
+            model='/workspace/sd/SD/models/Stable-diffusion/SDv2-512.ckpt'
+            if not os.path.exists('/workspace/sd/SD/models/Stable-diffusion/SDv2-512.ckpt'):
                print('[1;33mDownloading the V2-512 model...')
                call('gdown -O '+model+' https://huggingface.co/stabilityai/stable-diffusion-2-1-base/resolve/main/v2-1_512-nonema-pruned.ckpt', shell=True)
                clear_output()
             print('[1;32mUsing the original V2-512 model')
         elif Original_Model_Version == "v2-768":
-           model="/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/SDv2-768.ckpt"
+           model="/workspace/sd/SD/models/Stable-diffusion/SDv2-768.ckpt"
            print('[1;32mUsing the original V2-768 model')
         elif Original_Model_Version == "SDXL":
-            model="/workspace/sd/stable-diffusion-webui/models/Stable-diffusion/sd_xl_base_1.0.safetensors"
+            model="/workspace/sd/SD/models/Stable-diffusion/sd_xl_base_1.0.safetensors"
             print('[1;32mUsing the original SDXL model')
 
         else:
-            model="/workspace/sd/stable-diffusion-webui/models/Stable-diffusion"
+            model="/workspace/sd/SD/models/Stable-diffusion"
             print('[1;31mWrong model version, try again')
     try:
         model
     except:
-        model="/workspace/sd/stable-diffusion-webui/models/Stable-diffusion"
+        model="/workspace/sd/SD/models/Stable-diffusion"
 
     return model
 
@@ -223,13 +223,13 @@ def loradwn(LoRA_LINK):
     if LoRA_LINK=='':
         print('[1;33mNothing to do')
     else:
-        os.makedirs('/workspace/sd/stable-diffusion-webui/models/Lora', exist_ok=True)
+        os.makedirs('/workspace/sd/SD/models/Lora', exist_ok=True)
 
         src=getsrc(LoRA_LINK)
 
         if src=='civitai':
             modelname=get_name(LoRA_LINK, False)
-            loramodel=f'/workspace/sd/stable-diffusion-webui/models/Lora/{modelname}'
+            loramodel=f'/workspace/sd/SD/models/Lora/{modelname}'
             if not os.path.exists(loramodel):
               dwn(LoRA_LINK, loramodel, 'Downloading the LoRA model')
               clear_output()
@@ -237,7 +237,7 @@ def loradwn(LoRA_LINK):
               print('[1;33mModel already exists')
         elif src=='gdrive':
             modelname=get_name(LoRA_LINK, True)
-            loramodel=f'/workspace/sd/stable-diffusion-webui/models/Lora/{modelname}'
+            loramodel=f'/workspace/sd/SD/models/Lora/{modelname}'
             if not os.path.exists(loramodel):
               gdown.download(url=LoRA_LINK, output=loramodel, quiet=False, fuzzy=True)
               clear_output()
@@ -245,7 +245,7 @@ def loradwn(LoRA_LINK):
               print('[1;33mModel already exists')
         else:
             modelname=os.path.basename(LoRA_LINK)
-            loramodel=f'/workspace/sd/stable-diffusion-webui/models/Lora/{modelname}'
+            loramodel=f'/workspace/sd/SD/models/Lora/{modelname}'
             if not os.path.exists(loramodel):
               gdown.download(url=LoRA_LINK, output=loramodel, quiet=False, fuzzy=True)
               clear_output()
@@ -272,7 +272,7 @@ def CNet(ControlNet_Model, ControlNet_XL_Model):
           print(f"[1;32mThe model {filename} already exists[0m")    
 
     wrngv1=False
-    os.chdir('/workspace/sd/stable-diffusion-webui/extensions')
+    os.chdir('/workspace/sd/SD/extensions')
     if not os.path.exists("sd-webui-controlnet"):
       call('git clone https://github.com/Mikubill/sd-webui-controlnet.git', shell=True)
       os.chdir('/workspace')
@@ -282,7 +282,7 @@ def CNet(ControlNet_Model, ControlNet_XL_Model):
       call('git pull', shell=True, stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'w'))
       os.chdir('/workspace')
 
-    mdldir="/workspace/sd/stable-diffusion-webui/extensions/sd-webui-controlnet/models"
+    mdldir="/workspace/sd/SD/extensions/sd-webui-controlnet/models"
     for filename in os.listdir(mdldir):
       if "_sd14v1" in filename:
         renamed = re.sub("_sd14v1", "-fp16", filename)
@@ -361,16 +361,16 @@ def sd(User, Password, model):
 
     call('wget -q -O /usr/local/lib/python3.10/dist-packages/gradio/blocks.py https://raw.githubusercontent.com/TheLastBen/fast-stable-diffusion/main/AUTOMATIC1111_files/blocks.py', shell=True)
    
-    os.chdir('/workspace/sd/stable-diffusion-webui/modules')
+    os.chdir('/workspace/sd/SD/modules')
 
-    call("sed -i 's@possible_sd_paths =.*@possible_sd_paths = [\"/workspace/sd/stablediffusion\"]@' /workspace/sd/stable-diffusion-webui/modules/paths.py", shell=True)
-    call("sed -i 's@\.\.\/@src/@g' /workspace/sd/stable-diffusion-webui/modules/paths.py", shell=True)
-    call("sed -i 's@src\/generative-models@generative-models@g' /workspace/sd/stable-diffusion-webui/modules/paths.py", shell=True)
+    call("sed -i 's@possible_sd_paths =.*@possible_sd_paths = [\"/workspace/sd/stablediffusion\"]@' /workspace/sd/SD/modules/paths.py", shell=True)
+    call("sed -i 's@\.\.\/@src/@g' /workspace/sd/SD/modules/paths.py", shell=True)
+    call("sed -i 's@src\/generative-models@generative-models@g' /workspace/sd/SD/modules/paths.py", shell=True)
     
-    call("sed -i 's@\[\"sd_model_checkpoint\"\]@\[\"sd_model_checkpoint\", \"sd_vae\", \"CLIP_stop_at_last_layers\", \"inpainting_mask_weight\", \"initial_noise_multiplier\"\]@g' /workspace/sd/stable-diffusion-webui/modules/shared.py", shell=True)
+    call("sed -i 's@\[\"sd_model_checkpoint\"\]@\[\"sd_model_checkpoint\", \"sd_vae\", \"CLIP_stop_at_last_layers\", \"inpainting_mask_weight\", \"initial_noise_multiplier\"\]@g' /workspace/sd/SD/modules/shared.py", shell=True)
     
     call("sed -i 's@print(\"No module.*@@' /workspace/sd/stablediffusion/ldm/modules/diffusionmodules/model.py", shell=True)
-    os.chdir('/workspace/sd/stable-diffusion-webui')
+    os.chdir('/workspace/sd/SD')
     clear_output()
 
     podid=os.environ.get('RUNPOD_POD_ID')
@@ -414,7 +414,7 @@ def save(Huggingface_Write_token):
         
         if os.path.exists('sd'):
         
-            call('tar --exclude="stable-diffusion-webui/models/*/*" --exclude="sd-webui-controlnet/models/*" --zstd -cf sd_backup_rnpd.tar.zst sd', shell=True)
+            call('tar --exclude="SD/models/*/*" --exclude="sd-webui-controlnet/models/*" --zstd -cf sd_backup_rnpd.tar.zst sd', shell=True)
             api = HfApi()
             username = api.whoami(token=Huggingface_Write_token)["name"]
 
