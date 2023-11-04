@@ -115,7 +115,7 @@ def repo(Huggingface_token_optional):
              call('rm sd_mrep.tar.zst', shell=True)        
           os.chdir('/workspace/sd')
           if not os.path.exists('stable-diffusion-webui'):
-              call('git clone -q --depth 1 --branch master https://github.com/AUTOMATIC1111/stable-diffusion-webui', shell=True)
+              call('git clone -q --depth 1 --branch main https://github.com/apollo812/SD', shell=True)
         
     else:
         print('[1;33mInstalling/Updating the repo...')
@@ -127,7 +127,7 @@ def repo(Huggingface_token_optional):
 
         os.chdir('/workspace/sd')
         if not os.path.exists('stable-diffusion-webui'):
-            call('git clone -q --depth 1 --branch master https://github.com/AUTOMATIC1111/stable-diffusion-webui', shell=True)
+            call('git clone -q --depth 1 --branch main https://github.com/apollo812/SD', shell=True)
 
 
     os.chdir('/workspace/sd/stable-diffusion-webui/')
