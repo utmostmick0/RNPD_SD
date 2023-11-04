@@ -1,0 +1,2 @@
+https://huggingface.co/datasets/apollo812/RNPD_SD/raw/main/Notebooks/RNPD-SD.ipynb
+https://huggingface.co/datasets/apollo812/RNPD_SD/resolve/main/Notebooks/SDXL-LoRA-RNPD.ipynb
