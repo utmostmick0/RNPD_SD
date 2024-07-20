@@ -36,7 +36,7 @@ def Deps(force_reinstall):
         if not os.path.exists('cache'):
             call('mkdir cache', shell=True)
         os.chdir('deps')
-        dwn("https://huggingface.co/TheLastBen/dependencies/resolve/main/rnpddeps-t2.tar.zst", "/workspace/deps/rnpddeps-t2.tar.zst", "Installing dependencies")
+        dwn("https://github.com/utmostmick0/sd_dependencies/blob/f2216938549c58f6d16363cdbe8650960839bc7e/rnpddeps-t2.tar.zst", "/workspace/deps/rnpddeps-t2.tar.zst", "Installing dependencies")
         call('tar -C / --zstd -xf rnpddeps-t2.tar.zst', shell=True, stdout=open('/dev/null', 'w'))
         call("sed -i 's@~/.cache@/workspace/cache@' /usr/local/lib/python3.10/dist-packages/transformers/utils/hub.py", shell=True)
         os.chdir('/workspace')
@@ -85,7 +85,7 @@ def ntbks():
         call('rm -r Latest_Notebooks', shell=True)
         call('mkdir Latest_Notebooks', shell=True)
     os.chdir('/workspace/Latest_Notebooks')
-    call('wget -q -i https://huggingface.co/datasets/TheLastBen/RNPD/raw/main/Notebooks.txt', shell=True)
+    call('wget -q -i https://github.com/utmostmick0/RNPD/blob/ad27cd401b4c17d69728170e65dd58852e1412c4/Notebooks.txt', shell=True)
     call('rm Notebooks.txt', shell=True)
     os.chdir('/workspace')
 
@@ -121,7 +121,7 @@ def repo(Huggingface_token_optional):
         print('[1;33mInstalling/Updating the repo...')
         os.chdir('/workspace')
         if not os.path.exists('/workspace/sd/stablediffusiond'): #reset later
-           call('wget -q -O sd_mrep.tar.zst https://huggingface.co/TheLastBen/dependencies/resolve/main/sd_mrep.tar.zst', shell=True)
+           call('wget -q -O sd_mrep.tar.zst https://github.com/utmostmick0/dependencies/blob/3d4911654a6939e676f4353806b16beeb08c89fd/sd_mrep.tar.zst', shell=True)
            call('tar --zstd -xf sd_mrep.tar.zst', shell=True)
            call('rm sd_mrep.tar.zst', shell=True)        
 
@@ -288,8 +288,8 @@ def CNet(ControlNet_Model, ControlNet_XL_Model):
         renamed = re.sub("_sd14v1", "-fp16", filename)
         os.rename(os.path.join(mdldir, filename), os.path.join(mdldir, renamed))
 
-    call('wget -q -O CN_models.txt https://github.com/TheLastBen/fast-stable-diffusion/raw/main/AUTOMATIC1111_files/CN_models.txt', shell=True)
-    call('wget -q -O CN_models_XL.txt https://github.com/TheLastBen/fast-stable-diffusion/raw/main/AUTOMATIC1111_files/CN_models_XL.txt', shell=True)
+    call('wget -q -O CN_models.txt https://github.com/utmostmick0/fast-stable-duffusion/blob/7271b4ac161e034c6237612d23f48350ab6a5bcf/AUTOMATIC1111_files/CN_models.txt', shell=True)
+    call('wget -q -O CN_models_XL.txt https://github.com/utmostmick0/fast-stable-duffusion/blob/7271b4ac161e034c6237612d23f48350ab6a5bcf/AUTOMATIC1111_files/CN_models_XL.txt', shell=True)
       
     with open("CN_models.txt", 'r') as f:
         mdllnk = f.read().splitlines()
@@ -359,7 +359,7 @@ def sd(User, Password, model):
     if User =="" or Password=="":
       auth=""
 
-    call('wget -q -O /usr/local/lib/python3.10/dist-packages/gradio/blocks.py https://raw.githubusercontent.com/TheLastBen/fast-stable-diffusion/main/AUTOMATIC1111_files/blocks.py', shell=True)
+    call('wget -q -O /usr/local/lib/python3.10/dist-packages/gradio/blocks.py https://github.com/utmostmick0/fast-stable-duffusion/blob/7271b4ac161e034c6237612d23f48350ab6a5bcf/AUTOMATIC1111_files/blocks.py', shell=True)
    
     os.chdir('/workspace/sd/SD/modules')
 
